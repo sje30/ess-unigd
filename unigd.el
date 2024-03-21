@@ -13,8 +13,7 @@
   ;; when it is killed, it also kills the comint buffer running the perl script.
   (find-file "latest.svg")
   (auto-revert-mode 1)
-  (add-hook 'kill-buffer-hook 'clean-up-watcher 0 t)
-  )
+  (add-hook 'kill-buffer-hook 'clean-up-watcher 0 t))
 
 (defun clean-up-watcher ()
   "Kill the comint buffer *unigd-watcher* when svg is removed."
