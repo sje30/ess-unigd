@@ -1,0 +1,49 @@
+* Introduction
+
+Emacs can show images, such as PNG, SVG, PDF, in buffers.  For a long
+time, I've wondered how to get output from R into an Emacs buffer.
+This is non-trivial as far as I know because you typically need to
+wrap your R code in calls to start an R device and then wait until the
+device is closed before the plot is created.
+
+I recently saw this excellent video from Bruno Rodrigues introducing
+the httpgd package: <https://www.youtube.com/watch?v=uxyhmhRVOfw>. The
+[[https://github.com/nx10/httpgd][httpgd package]]  from Florian Rupprecht provides a web interface to his
+unified graphic device (unigd).  This allows you to view plots and
+tables in a web browser.
+
+Although Emacs can view web content, e.g. with eww, the lack of
+javascript in Emacs means that the httpgd package doesn't work
+directly.  However, it can still be used to serve up SVG images of the
+plots which Emacs can then render.  See the following movie for a
+proof of concept.
+
+
+* Next steps
+
+
+** Websockets
+
+Current approach is to use a perl script to check every 1 second to
+see if a new plot has been made.  Would be more efficient to use the
+websocket technology to receive updates from httpgd directly.
+
+Emacs has <https://blog.abrochard.com/websockets.html> but I can't see
+how this works currently.
+
+** Alternative output formsts
+
+Would a PNG rather than SVG be any more performant (to reduce flicker)?
+
+
+** Adjust to size of buffer.  Dynamically update?
+
+The default image size sent by httpgd is 720x576.  This could instead
+be determined by the current size of the Emacs buffer (and updated if
+the buffer changes size) using
+
+    (window-pixel-height)
+    (window-pixel-width)
+
+
+
