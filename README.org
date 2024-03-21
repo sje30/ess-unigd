@@ -9,7 +9,7 @@ device is closed before the plot is created.
 I recently saw this excellent video from Bruno Rodrigues introducing
 the httpgd package: <https://www.youtube.com/watch?v=uxyhmhRVOfw>. The
 [[https://github.com/nx10/httpgd][httpgd package]]  from Florian Rupprecht provides a web interface to his
-unified graphic device (unigd).  This allows you to view plots and
+unified graphic device [[https://github.com/nx10/unigd][unigd]].  This allows you to view plots and
 tables in a web browser.
 
 Although Emacs can view web content, e.g. with eww, the lack of
@@ -45,5 +45,7 @@ the buffer changes size) using
     (window-pixel-height)
     (window-pixel-width)
 
+** Browse history of plots
 
-
+The httpgd server remembers the plots created so we should be able to
+dynamically go through the history of plots.
