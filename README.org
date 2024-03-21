@@ -18,6 +18,7 @@ directly.  However, it can still be used to serve up SVG images of the
 plots which Emacs can then render.  See the following movie for a
 proof of concept.
 
+<https://youtu.be/1h7UR7t9JFM>
 
 * Next steps
 
