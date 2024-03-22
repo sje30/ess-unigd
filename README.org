@@ -20,6 +20,26 @@ proof of concept.
 
 <https://youtu.be/1h7UR7t9JFM>
 
+
+* Requirements
+
+- Newish Emacs (tested on Emacs 29).
+- ESS
+- curl, perl, md5sum
+- httpgd R package
+
+* Installation and usage
+
+1. Clone this repo
+2. =chmod +x check_outputs.pl=
+2. Open unigd.el and run =M-x eval-buffer=
+3. =M-x R= within this directory (so it will find =check_outputs.pl=).
+4. =M-x ess-unigd-start= should then open up the placeholder file
+   =latest.svg=.
+5. Return to the *R* buffer and start plotting...  In a background
+   buffer =*unigd-watcher*= you should see the output from the perl
+   script as it polls httpgd.
+
 * Next steps
 
 
