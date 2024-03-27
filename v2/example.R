@@ -18,20 +18,19 @@ essgd_url_and_token <- function() {
   cat(s)
 }
 
-## Step 3. Start the httpgd device.
+## Step 3: Start the httpgd device.
 ## I like to provide transparent background.
 hgd(bg="transparent")
 
 
-## Step 4
-## Start the Emacs interface.
+## Step 4: Start the Emacs interface.
 ## Do this from an R buffer that has an ess process attached to it.
 ## e.g. the *R* buffer, or this *R* script.
 ## M-x essgd-start
 ## (essgd-start)
 
 
-## Step 4.  Do some plotting!
+## Step 5:  Do some plotting!
 
 curve(1+(x*0), col='blue', main='Plot 1', lwd=4)
 curve(1+x, col='green', main='Plot 2', lwd=3)
