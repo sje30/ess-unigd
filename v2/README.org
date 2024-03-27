@@ -2,7 +2,7 @@
 
 See =example.R= for documentation, and [[https://youtu.be/TrwE_80eVTw][example video]].
 
-This version uses websockets to communicate directly between Emacs and
+This version uses [[https://blog.abrochard.com/websockets.html][websockets]] to communicate directly between Emacs and
 the httpgd() device.  This is efficient, as httpgd() notifies Emacs
 when a new plot is made, rather than needing to poll every 2 seconds.
 
@@ -21,4 +21,3 @@ is probably going to be required.)
   them all).
 - [ ] Provide easy ways of downloading current plot as e.g. pdf or
   svg.
-  
