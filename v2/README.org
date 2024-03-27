@@ -1,6 +1,6 @@
 * Version 2 of code
 
-See =example.R= for documentation.
+See =example.R= for documentation, and [[https://youtu.be/TrwE_80eVTw][example video]].
 
 ** Things to do:
 
