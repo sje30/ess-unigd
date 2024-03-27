@@ -52,7 +52,7 @@ websocket technology to receive updates from httpgd directly.
 Emacs has <https://blog.abrochard.com/websockets.html> but I can't see
 how this works currently.
 
-** Alternative output formsts
+** Alternative output formats
 
 Would a PNG rather than SVG be any more performant (to reduce flicker)?
 

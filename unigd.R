@@ -5,8 +5,9 @@
 ## poll for changes in the plots.
 require(httpgd)
 hgd(port=5900, token=FALSE)
+hgd_details() # show which port is open, how many websockets...
 
-## Step 2 - start plotting.
+## Step 2 - go to ess-websocket.el and start a socket.
 
 plot(runif(100), pch=20, main="100 points")
 
