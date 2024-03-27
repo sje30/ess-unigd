@@ -46,11 +46,9 @@ proof of concept.
 ** Websockets
 
 Current approach is to use a perl script to check every 1 second to
-see if a new plot has been made.  Would be more efficient to use the
-websocket technology to receive updates from httpgd directly.
-
-Emacs has <https://blog.abrochard.com/websockets.html> but I can't see
-how this works currently.
+see if a new plot has been made.  This approach might work well for
+running R remotely via TRAMP.  A websocket implementation is now
+available in [[v2][v2]] folder.
 
 ** Alternative output formats
 
@@ -68,5 +66,7 @@ the buffer changes size) using
 
 ** Browse history of plots
 
+
 The httpgd server remembers the plots created so we should be able to
-dynamically go through the history of plots.
+dynamically go through the history of plots.  See v2 for an
+implementation of this.
