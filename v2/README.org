@@ -2,9 +2,23 @@
 
 See =example.R= for documentation, and [[https://youtu.be/TrwE_80eVTw][example video]].
 
+This version uses websockets to communicate directly between Emacs and
+the httpgd() device.  This is efficient, as httpgd() notifies Emacs
+when a new plot is made, rather than needing to poll every 2 seconds.
+
+(This version requires the R session is running locally.  If you are
+using ESS and Tramp to run a remote R session, this is highly unlikely
+to work.  For remote usage, something similar to version 1 of the code
+is probably going to be required.)
+
 ** Things to do:
 
 - [ ] Close the *essgd* window when the *R* session closes, or if the
   httgpd() device is closed.
 - [ ] Investigate window layouts so that manual placement of windows
   not required.
+- [ ] Provide an interface from essgd for deleting plots (or clearing
+  them all).
+- [ ] Provide easy ways of downloading current plot as e.g. pdf or
+  svg.
+  
