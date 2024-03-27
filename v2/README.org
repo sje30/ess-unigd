@@ -1,6 +1,6 @@
-# Version 2 of code
+* Version 2 of code
 
-## Things to do:
+** Things to do:
 
 - [ ] Close the *essgd* window when the *R* session closes, or if the
   httgpd() device is closed.
