@@ -60,6 +60,7 @@ The initial size of the plot is half the current window."
     (setq-local essgd-latest "/tmp/me.svg")
 
     (pop-to-buffer buf)
+    (setq-local window-size-change-functions '(essgd-window-size-change))
     (when (> essgd-cur-plot 0)
       (essgd-show-plot-n essgd-cur-plot))
 
@@ -147,3 +148,9 @@ The initial size of the plot is half the current window."
     (essgd-show-plot-n (1+ essgd-cur-plot))))
 
 
+(defun essgd-window-size-change (win)
+  "Function run when the window size changes.
+WIN is currently used to get the buffer *essgd*."
+  (if essgd-debug
+      (message "essgd: resize window"))
+  (essgd-refresh))
