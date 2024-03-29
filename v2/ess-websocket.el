@@ -19,7 +19,7 @@ This allows us to respond automatically to new plots."
   (let* ((json-plist (json-parse-string (websocket-frame-text frame)
 					:false-object nil
 					:object-type 'plist))
-	 (possible-plot (1- (plist-get json-plist :hsize)))
+	 (possible-plot  (plist-get json-plist :hsize))
 	 (active (plist-get json-plist :active)))
     (when active
       (with-current-buffer "*essgd*"
@@ -48,11 +48,16 @@ The initial size of the plot is half the current window."
       (error "No r process to communicate with")
       )
 
-    (setq url1 (split-string  (ess-string-command  "essgd_url_and_token()") "--TOKEN--"))
-    (setq-local essgd-url (car url1))
-    (setq-local essgd-token (cadr url1))
+    ;; start the hgd() device here; output should contain the url
+    ;; that is serving the figures.
+    (setq start-output (ess-string-command essgd-start-text))
+    
+    (string-match "\\(http://[0-9.:]+\\)/live\\?token=\\(.+\\)" start-output)
+    ;; TODO - check case when token is missing.
+    ;; TODO - error check if URL ccannot be found.
+    (setq-local essgd-url   (match-string 1 start-output))
+    (setq-local essgd-token (match-string 2 start-output))
     (if (> (length essgd-token ) 0)
-	;; there is no token
 	(setq essgd-token (format "token=%s" essgd-token)))
     (setq-local essgd-plot-nums (essgd-get-plot-nums))
     (setq-local essgd-cur-plot
@@ -82,7 +87,7 @@ The initial size of the plot is half the current window."
       (setq text (shell-command-to-string cmd))
       (setq plist (json-parse-string text :object-type 'plist))
       (setq plots (plist-get plist :plots))
-      (mapcar (lambda (x) (string-to-number (cadr x))) plots))))
+      (mapcar (lambda (x) (1+  (string-to-number (cadr x)))) plots))))
 
 (defun essgd-show-plot-n (n)
   (let* ((edges (window-body-pixel-edges (get-buffer-window "*essgd*")))
@@ -161,3 +166,7 @@ WIN is currently used to get the buffer *essgd*."
   (if essgd-debug
       (message "essgd: resize window"))
   (essgd-refresh))
+
+(defvar essgd-start-text "httpgd::hgd(bg='transparent')
+"
+  "R code required for *essgd* session.")
