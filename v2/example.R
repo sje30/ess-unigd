@@ -1,24 +1,15 @@
 ## Step 1: Emacs pre-requisites
 ## Visit the file ess-websocket.el and run M-x eval-buffer
 
-## Step 2: R pre-requisites
-require(httpgd)
-require(unigd)
 
-
-## Step 3: Start the httpgd device.
-## I like to provide transparent background.
-hgd(bg="transparent")
-
-
-## Step 4: Start the Emacs interface.
+## Step 2: Start the Emacs interface.
 ## Do this from an R buffer that has an ess process attached to it.
 ## e.g. the *R* buffer, or this *R* script.
 ## M-x essgd-start
 ## (essgd-start)
 
 
-## Step 5:  Do some plotting!
+## Step 3:  Do some plotting!
 
 curve(1+(x*0), col='blue', main='Plot 1', lwd=4)
 curve(1+x, col='green', main='Plot 2', lwd=3)
