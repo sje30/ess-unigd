@@ -24,7 +24,8 @@ This allows us to respond automatically to new plots."
     (when active
       (with-current-buffer "*essgd*"
 	(unless (member possible-plot essgd-plot-nums)
-	  (essgd-refresh))))))
+	  (setq-local essgd-plot-nums (essgd-get-plot-nums))
+	  (essgd-show-plot-n (1+ possible-plot)))))))
 
 ;; API:
 ;; https://cran.r-project.org/web/packages/httpgd/vignettes/c01_httpgd-api.html
@@ -126,7 +127,7 @@ The initial size of the plot is half the current window."
   "Refresh the latest plot."
   (interactive)
   (setq-local essgd-plot-nums (essgd-get-plot-nums))
-  (essgd-show-plot-n (length essgd-plot-nums)))
+  (essgd-show-plot-n essgd-cur-plot))
 
 ;; Emacs 29 seems to make it much "easier" for defining major modes.
 (defvar-keymap essgd-mode-map
