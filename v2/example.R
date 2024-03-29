@@ -32,6 +32,6 @@ curve(1+x^2+x^3, col='orange', main='Plot 4', xlim=c(-1,1),lwd=2)
 
 
 
-plot(rnorm(1000))
-hist(runif(100),col='orange')
+plot(rnorm(1000), main='plot 5')
+hist(runif(100),col='orange', main='plot6')
 
