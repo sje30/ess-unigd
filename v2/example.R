@@ -5,11 +5,6 @@
 require(httpgd)
 require(unigd)
 
-essgd_url_and_token <- function() {
-  d <- hgd_details()
-  s <- sprintf("http://%s:%d--TOKEN--%s\n", d$host, d$port, d$token)
-  cat(s)
-}
 
 ## Step 3: Start the httpgd device.
 ## I like to provide transparent background.
