@@ -25,6 +25,8 @@ This allows us to respond automatically to new plots."
       (with-current-buffer "*essgd*"
 	(unless (member possible-plot essgd-plot-nums)
 	  (setq-local essgd-plot-nums (essgd-get-plot-nums))
+	  (setq-local essgd-cur-plot possible-plot)
+	  (when essgd-debug  (message "cur plot is %d" essgd-cur-plot))
 	  (essgd-show-plot-n  possible-plot))))))
 
 ;; API:
@@ -90,49 +92,52 @@ The initial size of the plot is half the current window."
       (mapcar (lambda (x) (1+  (string-to-number (cadr x)))) plots))))
 
 (defun essgd-show-plot-n (n)
-  (let* ((edges (window-body-pixel-edges (get-buffer-window "*essgd*")))
-	 (left (nth 0 edges))
-	 (top (nth 1 edges))
-	 (right (nth 2 edges))
-	 (bottom (nth 3 edges))
-	 (wid (- right left))
-	 (ht  (- bottom top))
-	 img
-	 ;; (essgd-latest (format "/tmp/ess-latest-%d.svg" n))
-	 (cmd (format "ugd_save(file=\"%s\",page=%d,width=%d,height=%d)"
-		      essgd-latest n wid ht ))
-	 (cmd1 (format "curl -s '%s/plot?index=%d&width=%d&height=%d&%s' > %s"
-		       essgd-url
-		       (1- n) 
-		       wid ht
-		       essgd-token
-		       essgd-latest))
-	 )
+  "Show plot N.
+Do nothing if n is zero."
+  (when (> n 0)
+    (let* ((edges (window-body-pixel-edges (get-buffer-window "*essgd*")))
+	   (left (nth 0 edges))
+	   (top (nth 1 edges))
+	   (right (nth 2 edges))
+	   (bottom (nth 3 edges))
+	   (wid (- right left))
+	   (ht  (- bottom top))
+	   img
+	   ;; (essgd-latest (format "/tmp/ess-latest-%d.svg" n))
+	   (cmd (format "ugd_save(file=\"%s\",page=%d,width=%d,height=%d)"
+			essgd-latest n wid ht ))
+	   (cmd1 (format "curl -s '%s/plot?index=%d&width=%d&height=%d&%s' > %s"
+			 essgd-url
+			 (1- n) 
+			 wid ht
+			 essgd-token
+			 essgd-latest))
+	   )
     
-    (when essgd-debug (message cmd1))
-    (when essgd-debug  (message "inside size %d x %d " wid ht))
-    (shell-command-to-string cmd1)
-    ;; (message cmd)
-    ;; (ess-string-command cmd)
-    (setq img (create-image essgd-latest))
-    (remove-images 0 1)
-    (put-image img 0)
-    ;; images are cached, by filename, which we don't want here,
-    ;; especially during testing.
-    (image-flush img)
-    (setq essgd-cur-plot n)
-    (setq-local mode-line-position
-		(format "P%d/%d" essgd-cur-plot (length essgd-plot-nums)))
+      (when essgd-debug (message cmd1))
+      (when essgd-debug  (message "inside size %d x %d " wid ht))
+      (shell-command-to-string cmd1)
+      ;; (message cmd)
+      ;; (ess-string-command cmd)
+      (setq img (create-image essgd-latest))
+      (remove-images 0 1)
+      (put-image img 0)
+      ;; images are cached, by filename, which we don't want here,
+      ;; especially during testing.
+      (image-flush img)
+      (setq essgd-cur-plot n)
+      (setq-local mode-line-position
+		  (format "P%d/%d" essgd-cur-plot (length essgd-plot-nums)))
 
 
-    ) )
+      )))
 
 
 (defun essgd-refresh ()
   "Refresh the latest plot."
   (interactive)
   (setq-local essgd-plot-nums (essgd-get-plot-nums))
-  (essgd-show-plot-n essgd-cur-plot))
+  (essgd-show-plot-n (with-current-buffer "*essgd*" essgd-cur-plot)))
 
 ;; Emacs 29 seems to make it much "easier" for defining major modes.
 (defvar-keymap essgd-mode-map
@@ -165,7 +170,8 @@ The initial size of the plot is half the current window."
 WIN is currently used to get the buffer *essgd*."
   (if essgd-debug
       (message "essgd: resize window"))
-  (essgd-refresh))
+  (with-current-buffer "*essgd*"
+    (essgd-refresh)))
 
 (defvar essgd-start-text "httpgd::hgd(bg='transparent')
 "
