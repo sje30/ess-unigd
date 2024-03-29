@@ -5,13 +5,6 @@
 require(httpgd)
 require(unigd)
 
-essgd_indexes <- function() {
-  ## Print the list of plot indexes.
-  n1 <- unlist(ugd_id(1, limit=Inf))
-  names(n1)<-NULL;
-  cat(n1, "\n")
-}
-
 essgd_url_and_token <- function() {
   d <- hgd_details()
   s <- sprintf("http://%s:%d--TOKEN--%s\n", d$host, d$port, d$token)
