@@ -25,7 +25,7 @@ This allows us to respond automatically to new plots."
       (with-current-buffer "*essgd*"
 	(unless (member possible-plot essgd-plot-nums)
 	  (setq-local essgd-plot-nums (essgd-get-plot-nums))
-	  (essgd-show-plot-n (1+ possible-plot)))))))
+	  (essgd-show-plot-n  possible-plot))))))
 
 ;; API:
 ;; https://cran.r-project.org/web/packages/httpgd/vignettes/c01_httpgd-api.html
