@@ -84,9 +84,13 @@ The initial size of the plot is half the current window."
       (mapcar (lambda (x) (string-to-number (cadr x))) plots))))
 
 (defun essgd-show-plot-n (n)
-  (let* (
-	 (wid (window-pixel-width (get-buffer-window "*essgd*")))
-	 (ht (window-pixel-height (get-buffer-window "*essgd*")))
+  (let* ((edges (window-body-pixel-edges (get-buffer-window "*essgd*")))
+	 (left (nth 0 edges))
+	 (top (nth 1 edges))
+	 (right (nth 2 edges))
+	 (bottom (nth 3 edges))
+	 (wid (- right left))
+	 (ht  (- bottom top))
 	 img
 	 ;; (essgd-latest (format "/tmp/ess-latest-%d.svg" n))
 	 (cmd (format "ugd_save(file=\"%s\",page=%d,width=%d,height=%d)"
@@ -98,7 +102,9 @@ The initial size of the plot is half the current window."
 		       essgd-token
 		       essgd-latest))
 	 )
+    
     (when essgd-debug (message cmd1))
+    (when essgd-debug  (message "inside size %d x %d " wid ht))
     (shell-command-to-string cmd1)
     ;; (message cmd)
     ;; (ess-string-command cmd)
