@@ -143,7 +143,8 @@ Do nothing if n is zero."
 (defvar-keymap essgd-mode-map
   "r" #'essgd-refresh
   "p" #'essgd-prev-plot
-  "n" #'essgd-next-plot)
+  "n" #'essgd-next-plot
+  "q" #'essgd-quit)
 
 (define-derived-mode essgd-mode
   fundamental-mode
@@ -164,6 +165,11 @@ Do nothing if n is zero."
       (message "Already at latest plot")
     (essgd-show-plot-n (1+ essgd-cur-plot))))
 
+(defun essgd-quit ()
+  "Quit the current *essgd* device and close the device in R."
+  (interactive)
+  (ess-string-command "dev.off()")
+  (kill-buffer))
 
 (defun essgd-window-size-change (win)
   "Function run when the window size changes.
