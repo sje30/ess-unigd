@@ -1,3 +1,11 @@
+
+* New repo
+
+I've cleaned up the code -- please see the new version at:
+
+<https://github.com/sje30/essgd>
+
+
 * Introduction
 
 Emacs can show images, such as PNG, SVG, PDF, in buffers.  For a long
